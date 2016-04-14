@@ -10,6 +10,9 @@ var storeApp = angular.module('store', [
       when('/cart', {
         templateUrl: 'partials/cart.html',
       }).
+      when('/confirm', {
+          templateUrl: 'partials/confirm.html',
+        }).
       otherwise({
         redirectTo: '/'
       });
