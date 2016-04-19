@@ -55,4 +55,4 @@ angular.module('app', [])
      function getLength() {
         return cart.length;
      }
-   }]);
+   }]);;
