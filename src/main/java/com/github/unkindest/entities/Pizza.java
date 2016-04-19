@@ -11,7 +11,7 @@ public class Pizza {
     public enum Size {small, medium, large};
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer pizza_id;
+    private Integer pizzaId;
     private BigDecimal price;
 
     @Enumerated(value = EnumType.STRING)
@@ -20,12 +20,13 @@ public class Pizza {
     @ManyToOne
     @JoinColumn(name = "pizza_base_id")
     private PizzaBase pizzaBase;
-    public Integer getPizza_id() {
-        return pizza_id;
+
+    public Integer getPizzaId() {
+        return pizzaId;
     }
 
-    public void setPizza_id(Integer pizza_id) {
-        this.pizza_id = pizza_id;
+    public void setPizzaId(Integer pizzaId) {
+        this.pizzaId = pizzaId;
     }
 
     public Size getSize() {
