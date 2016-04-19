@@ -35,18 +35,12 @@
                 <h4 class="card-title" th:text="${pizzaBase.name}">Pizza Name</h4>
                 <p class="card-text"></p>
                 <div class="c-input c-radio">
-                    <label class="c-input c-radio">
-                        <input type="radio" name="" value="0" /> Small
+                    <label class="c-input c-radio" th:each="pizza : ${pizzaBase.pizzas}">
+                        <input type="radio" th:name="pizzaBase.pizzaBaseId" th:value="${pizza.pizzaId}" />
+                        <span th:text="${pizza.size}">Small</span>
                         <span class="c-indicator"></span>
                     </label>
-                    <label class="c-input c-radio">
-                        <input type="radio" name=""  checked="true" value="1" /> Medium
-                        <span class="c-indicator"></span>
-                    </label>
-                    <label class="c-input c-radio">
-                        <input type="radio" name=""  value="2" /> Large
-                        <span class="c-indicator"></span>
-                    </label></div>
+                </div>
                 <h5>Price</h5>
                 <a onclick="" class="btn btn-primary"><i class="fa fa-cart-plus"></i> Add to cart </a>
             </div>
