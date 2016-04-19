@@ -1,5 +1,10 @@
 package com.github.unkindest.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +14,8 @@ import java.util.List;
  */
 @Entity
 public class PizzaBase {
+    @Transient
+    private static ObjectMapper objectMapper = new ObjectMapper();
     @Id
     @GeneratedValue
     private Integer pizzaBaseId;
@@ -22,7 +29,7 @@ public class PizzaBase {
     public void setImage(String image) {
         this.image = image;
     }
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pizzaBase")
     private List<Pizza> pizzas = new ArrayList<>();
     public Integer getPizzaBaseId() {
@@ -47,5 +54,16 @@ public class PizzaBase {
 
     public void setPizzas(List<Pizza> pizzas) {
         this.pizzas = pizzas;
+    }
+    @JsonIgnore
+    @Transient
+    public String getPizzasJson() throws JsonProcessingException {
+        String json = null;
+        try {
+            json = objectMapper.writeValueAsString(getPizzas());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }
