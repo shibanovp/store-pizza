@@ -22,8 +22,8 @@ public class PizzaServiceJpaImpl implements PizzaService{
         this.emf = emf;
     }
     @Override
-    public List<Pizza> listAll() {
+    public List<PizzaBase> listAll() {
         EntityManager em = emf.createEntityManager();
-        return em.createQuery("from Pizza", Pizza.class).getResultList();
+        return em.createQuery("from PizzaBase", PizzaBase.class).getResultList();
     }
 }

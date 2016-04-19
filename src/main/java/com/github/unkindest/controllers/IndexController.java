@@ -20,7 +20,7 @@ public class IndexController {
 
     @RequestMapping("/")
     public String getStore(Model model) {
-        model.addAttribute("pizzas", pizzaService.listAll());
+        model.addAttribute("pizzaBases", pizzaService.listAll());
         return "index";
     }
 }

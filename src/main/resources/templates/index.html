@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags always come first -->
     <meta charset="utf-8" />
@@ -29,10 +29,10 @@
     <h1 class="text-xs-center">Awesome pizza store!</h1>
 
     <div class="card-columns">
-        <div class="card text-xs-center">
-            <img class="card-img-top img-fluid" src="" alt="Card image cap" />
+        <div th:each="pizzaBase : ${pizzaBases}" class="card text-xs-center" >
+            <img class="card-img-top img-fluid" th:src="${pizzaBase.image}" alt="Card image cap" />
             <div class="card-block">
-                <h4 class="card-title">Title</h4>
+                <h4 class="card-title" th:text="${pizzaBase.name}">Pizza Name</h4>
                 <p class="card-text"></p>
                 <div class="c-input c-radio">
                     <label class="c-input c-radio">
