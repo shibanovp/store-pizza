@@ -20,6 +20,7 @@ public class IndexController {
 
     @RequestMapping("/")
     public String getStore(Model model) {
+//        pizzaService.seedPizzas();
         model.addAttribute("pizzas", pizzaService.listAll());
         return "index";
     }
