@@ -30,7 +30,7 @@ public class SeedServiceImpl implements Runnable{
         em.persist(createPizzas("Pepperoni Pizza", "//c2.staticflickr.com/6/5552/15050613457_d63b0675c4.jpg", new BigDecimal("11.22")));
         em.persist(createPizzas("Chicken pizza", "//c5.staticflickr.com/1/677/22759485212_e16a8fffdd_z.jpg", new BigDecimal("10.45")));
         em.persist(createPizzas("Margherita pizza", "//c8.staticflickr.com/6/5737/22151897983_a98a666b6d_k.jpg", new BigDecimal("8.99")));
-        em.persist(createPizzas("Napoletana Pizza", "//farm1.staticflickr.com/342/18317863720_827e722cb2_h.jpg", new BigDecimal("13.12")));
+        em.persist(createPizzas("Napoletana Pizza", "https://farm1.staticflickr.com/342/18317863720_827e722cb2_h.jpg", new BigDecimal("13.12")));
         em.getTransaction().commit();
     }
     private static PizzaBase createPizzas(String name, String image, BigDecimal smallPrice) {
