@@ -11,5 +11,7 @@ public class StorePizzaApplication {
 	public static void main(String[] args) {
 
 		ApplicationContext ctx = SpringApplication.run(StorePizzaApplication.class, args);
+        Runnable seedService = (Runnable) ctx.getBean("seedServiceImpl");
+        seedService.run();
 	}
 }
