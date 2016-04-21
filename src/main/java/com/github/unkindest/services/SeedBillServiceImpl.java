@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  * Created by paul on 21.04.16.
  */
 @Service
-public class SeedOrderServiceImpl implements CommandLineRunner{
+public class SeedBillServiceImpl implements CommandLineRunner{
     private EntityManagerFactory emf;
     @PersistenceUnit
     public void setEmf(EntityManagerFactory emf) {
