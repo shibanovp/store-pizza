@@ -14,7 +14,7 @@ import java.util.List;
  * Created by paul on 18.04.16.
  */
 @Service
-public class PizzaServiceJpaImpl implements PizzaService{
+public class PizzaServiceImpl implements PizzaService{
     private EntityManagerFactory emf;
 
     @PersistenceUnit
