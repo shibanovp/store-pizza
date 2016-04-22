@@ -1,6 +1,7 @@
 package com.github.unkindest.services;
 
 import com.github.unkindest.entities.Bill;
+import com.github.unkindest.entities.BillPizza;
 import com.github.unkindest.entities.Pizza;
 import com.github.unkindest.entities.PizzaBase;
 import org.springframework.boot.CommandLineRunner;
@@ -26,11 +27,18 @@ public class SeedBillServiceImpl implements CommandLineRunner{
     public void run(String... args) throws Exception {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        Bill bill = new Bill();
         PizzaBase pizzaBase = createPizzas("Grilled chicken, artichoke hearts, and arugula pizza","//farm3.staticflickr.com/2101/2529856456_368530c5ab_b.jpg", new BigDecimal("12.35"));
         em.persist(pizzaBase);
-        bill.getPizzas().addAll(em.createQuery("from Pizza", Pizza.class).getResultList());
-        em.persist(bill);
+        Bill bill = new Bill();
+        for(Pizza pizza : pizzaBase.getPizzas()) {
+            BillPizza billPizza = new BillPizza();
+            billPizza.setPizza(pizza);
+            billPizza.setBill(bill);
+            billPizza.setQuantity(1);
+            bill.getBillPizzas().add(billPizza);
+            em.persist(billPizza);
+            em.persist(bill);
+        }
         em.getTransaction().commit();
     }
     private static PizzaBase createPizzas(String name, String image, BigDecimal smallPrice) {
