@@ -8,6 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
 </head>
 <body ng-app="app">
     <div class="container">
@@ -31,13 +32,13 @@
             <fieldset class="text-xs-center">
                 <label class="c-input c-radio">
                     <i class="fa fa-2x fa-money"></i>
-                    <input id="radio1" name="paymentMethod" type="radio" checked onclick="switchMethod(this.value);" value="cash">
+                    <input id="radio1" name="paymentMethod" type="radio" checked="" onclick="switchMethod(this.value);" value="cash" />
                     <span class="c-indicator"></span>
                     I will pay with cash.
                 </label>
                 <label class="c-input c-radio">
                     <i class="fa fa-2x fa-credit-card"></i>
-                    <input id="radio2" name="paymentMethod" type="radio" onclick="switchMethod(this.value);" value="card">
+                    <input id="radio2" name="paymentMethod" type="radio" onclick="switchMethod(this.value);" value="card" />
                     <span class="c-indicator"></span>
                     I will pay with credit card.
                 </label>
@@ -46,32 +47,31 @@
             <fieldset id="cardPayment">
                 <fieldset class="form-group">
                     <label for="formGroupExampleInput">Card number</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="0000 0000 0000 0000">
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="0000 0000 0000 0000" />
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="formGroupExampleInput2">Card holder name</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="John Smith">
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="John Smith" />
                 </fieldset>
 
                 <label>Valid through</label>
                 <fieldset class="form-group">
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" placeholder="MM">
+                        <input type="text" class="form-control" placeholder="MM" />
                     </div>
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" placeholder="YY">
+                        <input type="text" class="form-control" placeholder="YY" />
                     </div>
                 </fieldset>
                 <label>CVV</label>
                 <fieldset class="form-group">
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" placeholder="000">
+                        <input type="text" class="form-control" placeholder="000" />
                     </div>
                 </fieldset>
             </fieldset>
             <button type="button" id="submit" class="btn btn-primary btn-lg">Confirm Order</button>
         </form>
-    <h1 class="text-xs-center">Checkout</h1>
 
 <!-- jQuery first, then Bootstrap JS. -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
