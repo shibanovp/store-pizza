@@ -17,7 +17,7 @@ public class PizzaBase {
     @Transient
     private static ObjectMapper objectMapper = new ObjectMapper();
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pizzaBaseId;
     private String name;
     private String image;

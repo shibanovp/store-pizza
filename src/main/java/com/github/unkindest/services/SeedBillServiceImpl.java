@@ -29,17 +29,21 @@ public class SeedBillServiceImpl implements CommandLineRunner{
         em.getTransaction().begin();
         PizzaBase pizzaBase = createPizzas("Grilled chicken, artichoke hearts, and arugula pizza","//farm3.staticflickr.com/2101/2529856456_368530c5ab_b.jpg", new BigDecimal("12.35"));
         em.persist(pizzaBase);
-        Bill bill = new Bill();
-        for(Pizza pizza : pizzaBase.getPizzas()) {
-            BillPizza billPizza = new BillPizza();
-            billPizza.setPizza(pizza);
-            billPizza.setBill(bill);
-            billPizza.setQuantity(1);
-            bill.getBillPizzas().add(billPizza);
-            em.persist(billPizza);
-            em.persist(bill);
-        }
         em.getTransaction().commit();
+        em.getTransaction().begin();
+
+        Bill bill = new Bill();
+        Pizza pizza = em.find(Pizza.class, 1);
+        BillPizza billPizza = new BillPizza();
+        billPizza.setPizza(pizza);
+        billPizza.setBill(bill);
+        billPizza.setQuantity(1);
+        bill.getBillPizzas().add(billPizza);
+//        em.merge(pizza);
+        em.persist(billPizza);
+//        em.merge(bill);
+        em.getTransaction().commit();
+
     }
     private static PizzaBase createPizzas(String name, String image, BigDecimal smallPrice) {
         PizzaBase pizzaBase = new PizzaBase();

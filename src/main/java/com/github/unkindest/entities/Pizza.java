@@ -1,5 +1,7 @@
 package com.github.unkindest.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -30,7 +32,7 @@ public class Pizza {
     public void setBillPizza(Set<BillPizza> billPizza) {
         this.billPizza = billPizza;
     }
-
+    @JsonIgnore
     @OneToMany(mappedBy = "pizza")
     private Set<BillPizza> billPizza = new HashSet<BillPizza>();
 
