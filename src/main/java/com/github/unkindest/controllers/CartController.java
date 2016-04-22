@@ -24,10 +24,6 @@ public class CartController {
 //        model.addAttribute("testsess", session.getAttribute("test"));
         return "cart";
     }
-    @RequestMapping(value = "/cart", method = RequestMethod.POST)
-    public void addToCart() {
-
-    }
     @RequestMapping(value = "/carttest")
     public String test(HttpSession session, Model m) {
 //        m.addAttribute("testsess", session.getAttribute("test"));
