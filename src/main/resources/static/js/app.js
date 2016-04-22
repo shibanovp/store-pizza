@@ -55,4 +55,16 @@ angular.module('app', [])
      function getLength() {
         return cart.length;
      }
-   }]);;
+   }]);
+angular.module('cart', [])
+.run(function() {
+
+})
+.controller('CartCtrl', function() {
+    this.items = JSON.parse(sessionStorage.cart);
+    this.delete = function ($index) {
+        this.items.splice($index,1);
+        sessionStorage.cart = JSON.stringify(this.items);
+    }
+    console.warn('cart is here', this.items);
+})

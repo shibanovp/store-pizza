@@ -4,6 +4,7 @@ import org.springframework.session.web.http.HttpSessionManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +23,10 @@ public class CartController {
         session.setAttribute("test", 100);
 //        model.addAttribute("testsess", session.getAttribute("test"));
         return "cart";
+    }
+    @RequestMapping(value = "/cart", method = RequestMethod.POST)
+    public void addToCart() {
+
     }
     @RequestMapping(value = "/carttest")
     public String test(HttpSession session, Model m) {
