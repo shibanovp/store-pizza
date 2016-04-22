@@ -2,6 +2,8 @@ package com.github.unkindest.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by paul on 18.04.16.
@@ -20,6 +22,17 @@ public class Pizza {
     @ManyToOne
     @JoinColumn(name = "pizza_base_id")
     private PizzaBase pizzaBase;
+
+    public Set<BillPizza> getBillPizza() {
+        return billPizza;
+    }
+
+    public void setBillPizza(Set<BillPizza> billPizza) {
+        this.billPizza = billPizza;
+    }
+
+    @OneToMany(mappedBy = "pizza")
+    private Set<BillPizza> billPizza = new HashSet<BillPizza>();
 
     public Integer getPizzaId() {
         return pizzaId;

@@ -10,14 +10,10 @@ import java.util.Set;
 @Entity
 public class Bill {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer billId;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "bill_pizza", joinColumns = @JoinColumn(name = "bill_id"),
-            inverseJoinColumns = @JoinColumn(name = "pizza_id"))
-    private Set<Pizza> pizzas = new HashSet<>();
-
+    @OneToMany(mappedBy = "bill")
+    private Set<BillPizza> billPizzas = new HashSet<BillPizza>();
 
     public Integer getBillId() {
         return billId;
@@ -27,11 +23,11 @@ public class Bill {
         this.billId = billId;
     }
 
-    public Set<Pizza> getPizzas() {
-        return pizzas;
+    public Set<BillPizza> getBillPizzas() {
+        return billPizzas;
     }
 
-    public void setPizzas(Set<Pizza> pizzas) {
-        this.pizzas = pizzas;
+    public void setBillPizzas(Set<BillPizza> billPizzas) {
+        this.billPizzas = billPizzas;
     }
 }
