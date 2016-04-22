@@ -46,23 +46,22 @@
             </tr>
             </tbody>
         </table>
-        <form id="paymentForm text-xs-right">
+        <form id="paymentForm text-xs-right" ng-init="method='cash'">
             <fieldset class="text-xs-center">
                 <label class="c-input c-radio">
                     <i class="fa fa-2x fa-money"></i>
-                    <input id="radio1" name="paymentMethod" type="radio" checked="" onclick="switchMethod(this.value);" value="cash" />
+                    <input id="radio1" ng-model="method"  type="radio" checked="" value="cash" />
                     <span class="c-indicator"></span>
                     I will pay with cash.
                 </label>
                 <label class="c-input c-radio">
                     <i class="fa fa-2x fa-credit-card"></i>
-                    <input id="radio2" name="paymentMethod" type="radio" onclick="switchMethod(this.value);" value="card" />
+                    <input id="radio2" ng-model="method" type="radio" value="card" />
                     <span class="c-indicator"></span>
                     I will pay with credit card.
                 </label>
             </fieldset>
-
-            <fieldset id="cardPayment">
+            <fieldset id="cardPayment" ng-show="method == 'card'">
                 <fieldset class="form-group">
                     <label for="formGroupExampleInput">Card number</label>
                     <input type="text" class="form-control" id="formGroupExampleInput" placeholder="0000 0000 0000 0000" />
