@@ -2,8 +2,8 @@
 <td scope="row">{{$index + 1}}</td>
 <td>{{item.pizzaBase.name}}</td>
 <td>
-    <select ng-model="item.pizza" ng-options="pizza.size for pizza in item.pizzas track by pizza.pizzaId" ng-change="cart.save($index, item)"></select>
-</td>>
+    <select ng-model="item.pizza" ng-options="pizza.size for pizza in item.pizzas track by $index" ng-change="cart.save($index, item)"></select>
+</td>
 <td><input ng-model="item.quantity" ng-change="cart.save($index, item)"/></td>
 <td>{{item.pizza.price}}</td>
 <td>{{item.pizza.price * item.quantity}}</td>
