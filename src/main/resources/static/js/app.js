@@ -105,15 +105,20 @@ angular.module('cart', [])
 .directive('pizzaEdit', ['$http','$timeout', function($http, $timeout) {
   return {
     scope: false,
+    controller: 'CartCtrl',
+    controllerAs: 'ctrl',
     templateUrl: 'partials/pizza-edit.html',
     link: function(scope) {
         $http.get(scope.item.pizza._links.pizzaBase.href).then(function(res) {
+        console.log(res);
         scope.item.pizzaBase = res.data;
         return res;
         }).then(function(res) {
         $http.get(res.data._links.pizzas.href).then(function(res) {
             scope.item.pizzas = res.data._embedded.pizza;
         })
+        }).then(function() {
+            scope.ctrl.save(scope.$index, scope.item)
         });
     }
   }
