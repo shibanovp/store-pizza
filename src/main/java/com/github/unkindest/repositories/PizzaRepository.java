@@ -1,7 +1,6 @@
 package com.github.unkindest.repositories;
 
 import com.github.unkindest.entities.Pizza;
-import com.github.unkindest.entities.PizzaBase;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -10,5 +9,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  */
 
 @RepositoryRestResource(collectionResourceRel = "pizza", path = "pizza")
-public interface PizzaRepository extends CrudRepository<Pizza, Integer> {
-}
+public interface PizzaRepository extends CrudRepository<Pizza, Integer> {}
+
