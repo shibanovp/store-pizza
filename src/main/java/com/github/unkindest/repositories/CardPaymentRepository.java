@@ -1,6 +1,5 @@
 package com.github.unkindest.repositories;
 
-import com.github.unkindest.entities.Bill;
 import com.github.unkindest.entities.CardPayment;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -10,5 +9,4 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  */
 
 @RepositoryRestResource(collectionResourceRel = "cardPayment", path = "cardpayment")
-public interface CardPaymentRepository extends CrudRepository<CardPayment, Integer> {
-}
+public interface CardPaymentRepository extends CrudRepository<CardPayment, Integer> {}
