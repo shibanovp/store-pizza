@@ -144,7 +144,18 @@ angular.module('checkout', [])
                     quantity: item.quantity
                 })
             })
-        }).then(function() {
+            return billUri;
+        }).then(function(billUri) {
+            if (ctrl.method == 'card') {
+                $http.post('cardpayment', {
+                    bill: billUri,
+                    number: ctrl.number,
+                    name: ctrl.name,
+                    validm: ctrl.validm,
+                    validy: ctrl.validy,
+                    ccv: ctrl.ccv
+                })
+            }
             delete sessionStorage.cart
         })
     }

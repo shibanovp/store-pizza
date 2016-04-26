@@ -72,26 +72,26 @@
             <fieldset id="cardPayment" ng-show="checkout.method == 'card'">
                 <fieldset class="form-group">
                     <label for="formGroupExampleInput">Card number</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="0000 0000 0000 0000" />
+                    <input type="text" ng-model="checkout.number" class="form-control" id="formGroupExampleInput" placeholder="0000 0000 0000 0000" />
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="formGroupExampleInput2">Card holder name</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="John Smith" />
+                    <input type="text" ng-model="checkout.name" class="form-control" id="formGroupExampleInput2" placeholder="John Smith" />
                 </fieldset>
 
                 <label>Valid through</label>
                 <fieldset class="form-group">
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" placeholder="MM" />
+                        <input type="text" ng-model="checkout.validm" class="form-control" placeholder="MM" />
                     </div>
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" placeholder="YY" />
+                        <input type="text" ng-model="checkout.validy" class="form-control" placeholder="YY" />
                     </div>
                 </fieldset>
                 <label>CVV</label>
                 <fieldset class="form-group">
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" placeholder="000" />
+                        <input type="text" ng-model="checkout.ccv" class="form-control" placeholder="000" />
                     </div>
                 </fieldset>
             </fieldset>
