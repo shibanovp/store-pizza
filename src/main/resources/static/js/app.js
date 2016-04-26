@@ -9,12 +9,10 @@ angular.module('app', [])
 
             ctrl.pizzas = res.data._embedded.pizzaBase;
             angular.forEach(ctrl.pizzas, function(pizzaBase) {
-//            console.log('StoreCtrl', pizzaBase);
                 $http.get(pizzaBase._links.pizzas.href).then(function(res) {
                     pizzaBase.pizzas = res.data._embedded.pizza;
                 })
             })
-
         } else {
             ctrl.pizzas = [];
         }
