@@ -1,9 +1,9 @@
-<img class="card-img-top img-fluid" ng-src="{{checked.pizzaBase.image}}" alt="Card image cap" />
+<img class="card-img-top img-fluid" ng-src="{{data.image}}" alt="Card image cap" />
 <div class="card-block">
-    <h4 class="card-title">{{checked.pizzaBase.name}}</h4>
+    <h4 class="card-title">{{data.name}}</h4>
     <p class="card-text"></p>
     <div class="c-input c-radio">
-        <label ng-repeat="pizza in data"class="c-input c-radio" >
+        <label ng-repeat="pizza in data.pizzas"class="c-input c-radio" >
             <input type="radio" ng-model="$parent.checked" ng-value="pizza" />
             <span>{{ pizza.size }}</span>
             <span class="c-indicator"></span>

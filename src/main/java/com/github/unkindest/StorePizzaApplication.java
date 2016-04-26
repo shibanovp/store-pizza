@@ -9,7 +9,6 @@ import org.springframework.context.ApplicationContext;
 public class StorePizzaApplication {
 
 	public static void main(String[] args) {
-
 		ApplicationContext ctx = SpringApplication.run(StorePizzaApplication.class, args);
 	}
 }

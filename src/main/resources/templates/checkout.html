@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
 </head>
-<body ng-app="cart">
+<body ng-app="checkout" ng-controller="CheckoutCtrl as checkout">
     <div class="container">
         <nav class="navbar navbar-light bg-faded">
             <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
@@ -28,40 +28,48 @@
         </nav>
     </div>
         <h1>Order confirmation page.</h1>
-        <table class="table" ng-controller="CartCtrl as cart">
+        <table class="table">
             <thead>
             <tr>
                 <th>#</th>
                 <th>Pizza Name</th>
                 <th>Pizza Size</th>
+                <th>Quantity</th>
                 <th>Pizza Price</th>
+                <th>Subtotal</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="pizza in cart.items track by $index">
+            <tr ng-repeat="item in checkout.items track by $index">
                 <th scope="row">{{$index + 1}}</th>
-                <td>{{pizza.pizzaBase.name}}</td>
-                <td>{{pizza.size}}</td>
-                <td>{{pizza.price}}</td>
+                <td>{{item.pizzaBase.name}}</td>
+                <td>{{item.pizza.size}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.pizza.price}}</td>
+                <td>{{item.pizza.price * item.quantity}}</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td>{{ checkout.total }}</td>
             </tr>
             </tbody>
         </table>
-        <form id="paymentForm text-xs-right" ng-init="method='cash'">
+        <form id="paymentForm text-xs-right" ng-submit="checkout.confirm()">
             <fieldset class="text-xs-center">
                 <label class="c-input c-radio">
                     <i class="fa fa-2x fa-money"></i>
-                    <input id="radio1" ng-model="method"  type="radio" checked="" value="cash" />
+                    <input id="radio1" ng-model="checkout.method"  type="radio" checked="" value="cash" />
                     <span class="c-indicator"></span>
                     I will pay with cash.
                 </label>
                 <label class="c-input c-radio">
                     <i class="fa fa-2x fa-credit-card"></i>
-                    <input id="radio2" ng-model="method" type="radio" value="card" />
+                    <input id="radio2" ng-model="checkout.method" type="radio" value="card" />
                     <span class="c-indicator"></span>
                     I will pay with credit card.
                 </label>
             </fieldset>
-            <fieldset id="cardPayment" ng-show="method == 'card'">
+            <fieldset id="cardPayment" ng-show="checkout.method == 'card'">
                 <fieldset class="form-group">
                     <label for="formGroupExampleInput">Card number</label>
                     <input type="text" class="form-control" id="formGroupExampleInput" placeholder="0000 0000 0000 0000" />
@@ -87,7 +95,7 @@
                     </div>
                 </fieldset>
             </fieldset>
-            <button type="button" id="submit" class="btn btn-primary btn-lg">Confirm Order</button>
+            <button type="submit" id="submit"  class="btn btn-primary btn-lg">Confirm Order</button>
         </form>
 
 <!-- jQuery first, then Bootstrap JS. -->

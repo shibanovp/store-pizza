@@ -2,16 +2,37 @@ angular.module('app', [])
 .run(function() {
 
 })
-.directive('pizza', ['cart', function(cart) {
+.controller('StoreCtrl', ['$scope','$http', function($scope, $http) {
+    var ctrl = this;
+    $http.get('pizzabase').then(function(res) {
+        if (res.data._embedded != undefined) {
+
+            ctrl.pizzas = res.data._embedded.pizzaBase;
+            angular.forEach(ctrl.pizzas, function(pizzaBase) {
+//            console.log('StoreCtrl', pizzaBase);
+                $http.get(pizzaBase._links.pizzas.href).then(function(res) {
+                    pizzaBase.pizzas = res.data._embedded.pizza;
+                })
+            })
+
+        } else {
+            ctrl.pizzas = [];
+        }
+    });
+
+}])
+.directive('pizza', ['cart','$timeout', function(cart, $timeout) {
   return {
     scope: {
       data: '='
     },
     templateUrl: 'partials/pizza.html',
     link: function(scope) {
-        scope.checked = scope.data[1] || scope.data[0];
+        $timeout(function() {
+            scope.checked = scope.data.pizzas[0];
+        });
         scope.add = function() {
-            cart.add(scope.checked);
+            cart.add(scope.checked, 1);
         }
     }
   }
@@ -29,7 +50,7 @@ angular.module('app', [])
     }
 }])
  .factory('cart', ['$timeout','$rootScope', function($timeout, $rootScope) {
-    var cart = [];
+    var cart = sessionStorage.cart ? JSON.parse(sessionStorage.cart) : [];
     return {
         getList: getList,
         add: add,
@@ -37,8 +58,8 @@ angular.module('app', [])
         getTotal: getTotal
     }
     function getTotal() {
-    return cart.reduce(function(previousValue, currentValue, currentIndex, array) {
-      return previousValue + currentValue.price;
+    return cart.reduce(function(previousValue, currentValue) {
+      return previousValue + currentValue.pizza.price * currentValue.quantity;
     }, 0);
     }
     function getCart() {
@@ -47,8 +68,11 @@ angular.module('app', [])
     function getList() {
         return cart;
      };
-     function add(checked) {
-      cart.push(checked);
+     function add(pizza, quantity) {
+      cart.push({
+          pizza: pizza,
+          quantity: quantity
+      });
       $rootScope.$broadcast('cartChanged');
       sessionStorage.cart = JSON.stringify(cart);
      }
@@ -60,11 +84,68 @@ angular.module('cart', [])
 .run(function() {
 
 })
-.controller('CartCtrl', function() {
-    this.items = JSON.parse(sessionStorage.cart);
+.controller('CartCtrl', function($scope) {
+    var ctrl = this;
+    this.items = sessionStorage.cart ? JSON.parse(sessionStorage.cart) : [];
     this.delete = function ($index) {
         this.items.splice($index,1);
         sessionStorage.cart = JSON.stringify(this.items);
     }
-    console.warn('cart is here', this.items);
+    this.save = function ($index, pizza) {
+        this.items[$index] = pizza;
+        sessionStorage.cart = JSON.stringify(this.items);
+    }
+    $scope.$watch(function() { return ctrl.items;}, function() {
+        ctrl.total = ctrl.getTotal();
+    }, true );
+    this.getTotal = function() {
+        return this.items.reduce(function(previousValue, currentValue) {
+              return previousValue + currentValue.pizza.price * currentValue.quantity;
+            }, 0);
+    }
 })
+.directive('pizzaEdit', ['$http','$timeout', function($http, $timeout) {
+  return {
+    scope: false,
+    templateUrl: 'partials/pizza-edit.html',
+    link: function(scope) {
+        $http.get(scope.item.pizza._links.pizzaBase.href).then(function(res) {
+        scope.item.pizzaBase = res.data;
+        return res;
+        }).then(function(res) {
+        $http.get(res.data._links.pizzas.href).then(function(res) {
+            scope.item.pizzas = res.data._embedded.pizza;
+        })
+        });
+    }
+  }
+}]);
+angular.module('checkout', [])
+.run(function() {
+    console.log('checkout runs');
+})
+.controller('CheckoutCtrl', ['$scope', '$http', function($scope, $http) {
+    var ctrl = this;
+    ctrl.method = 'cash';
+    ctrl.items = JSON.parse(sessionStorage.cart);
+    ctrl.total = ctrl.items.reduce(function(previousValue, currentValue) {
+       return previousValue + currentValue.pizza.price * currentValue.quantity;
+     }, 0);
+    console.log(ctrl.items);
+    ctrl.confirm = function() {
+        $http.post('bill', {}).then(function(res) {
+            return res.data._links.self.href;
+        }).then(function (billUri) {
+            angular.forEach(ctrl.items, function(item) {
+            pizzaUri = item.pizza._links.self.href;
+                $http.post('billpizza', {
+                    bill: billUri,
+                    pizza: pizzaUri,
+                    quantity: item.quantity
+                })
+            })
+        }).then(function() {
+            delete sessionStorage.cart
+        })
+    }
+}])
