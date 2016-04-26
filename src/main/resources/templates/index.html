@@ -29,9 +29,10 @@
     </div>
     <h1 class="text-xs-center">Pizza store!</h1>
 
-    <div class="card-columns">
-        <div th:each="pizzaBase : ${pizzaBases}" class="card text-xs-center" >
-            <pizza th:data="${pizzaBase.getPizzasJson()}"></pizza>
+    <div class="card-columns" ng-controller="StoreCtrl as store">
+
+        <div ng-repeat="pizzaBase in store.pizzas" class="card text-xs-center" >
+            <pizza data="pizzaBase"></pizza>
         </div>
     </div>
 <!-- jQuery first, then Bootstrap JS. -->

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by paul on 18.04.16.
  */
-@Service
+//@Service
 public class PizzaServiceImpl implements PizzaService{
     private EntityManagerFactory emf;
 

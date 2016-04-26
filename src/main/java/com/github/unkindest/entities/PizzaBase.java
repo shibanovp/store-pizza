@@ -14,8 +14,6 @@ import java.util.List;
  */
 @Entity
 public class PizzaBase {
-    @Transient
-    private static ObjectMapper objectMapper = new ObjectMapper();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pizzaBaseId;
@@ -29,7 +27,6 @@ public class PizzaBase {
     public void setImage(String image) {
         this.image = image;
     }
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pizzaBase")
     private List<Pizza> pizzas = new ArrayList<>();
     public Integer getPizzaBaseId() {
@@ -55,15 +52,5 @@ public class PizzaBase {
     public void setPizzas(List<Pizza> pizzas) {
         this.pizzas = pizzas;
     }
-    @JsonIgnore
-    @Transient
-    public String getPizzasJson() throws JsonProcessingException {
-        String json = null;
-        try {
-            json = objectMapper.writeValueAsString(getPizzas());
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return json;
-    }
+
 }

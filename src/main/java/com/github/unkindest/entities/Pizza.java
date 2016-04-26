@@ -24,17 +24,8 @@ public class Pizza {
     @ManyToOne
     @JoinColumn(name = "pizza_base_id")
     private PizzaBase pizzaBase;
-
-    public Set<BillPizza> getBillPizza() {
-        return billPizza;
-    }
-
-    public void setBillPizza(Set<BillPizza> billPizza) {
-        this.billPizza = billPizza;
-    }
-    @JsonIgnore
-    @OneToMany(mappedBy = "pizza")
-    private Set<BillPizza> billPizza = new HashSet<BillPizza>();
+//    @OneToMany(mappedBy = "pizza")
+//    private Set<BillPizza> billPizza = new HashSet<BillPizza>();
 
     public Integer getPizzaId() {
         return pizzaId;
@@ -67,4 +58,12 @@ public class Pizza {
     public void setPizzaBase(PizzaBase pizzaBase) {
         this.pizzaBase = pizzaBase;
     }
+
+//    public Set<BillPizza> getBillPizza() {
+//        return billPizza;
+//    }
+//
+//    public void setBillPizza(Set<BillPizza> billPizza) {
+//        this.billPizza = billPizza;
+//    }
 }

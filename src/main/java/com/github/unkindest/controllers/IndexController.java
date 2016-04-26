@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-    private PizzaService pizzaService;
-    @Autowired
-    public void setPizzaService(PizzaService pizzaService) {
-        this.pizzaService = pizzaService;
-    }
+//    private PizzaService pizzaService;
+//    @Autowired
+//    public void setPizzaService(PizzaService pizzaService) {
+//        this.pizzaService = pizzaService;
+//    }
 
     @RequestMapping("/")
     public String getStore(Model model) {
-        model.addAttribute("pizzaBases", pizzaService.listAll());
+//        model.addAttribute("pizzaBases", pizzaService.listAll());
         return "index";
     }
 }

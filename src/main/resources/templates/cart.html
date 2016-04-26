@@ -34,20 +34,22 @@
             <th>#</th>
             <th>Pizza Name</th>
             <th>Pizza Size</th>
+            <th>Quantity</th>
             <th>Pizza Price</th>
+            <th>Subtotal</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="pizza in cart.items track by $index">
-            <th scope="row">{{$index + 1}}</th>
-            <td>{{pizza.pizzaBase.name}}</td>
-            <td>{{pizza.size}}</td>
-            <td>{{pizza.price}}</td>
-            <td><button class="btn" ng-click="cart.delete($index)">Delete</button></td>
+        <tr ng-repeat="item in cart.items track by $index" pizza-edit="">
+        </tr>
+        <tr>
+            <th>Total</th>
+            <td>{{ cart.total }}</td>
         </tr>
         </tbody>
     </table>
+
     <a class="btn btn-primary" href="/checkout">Checkout</a>
 <!-- jQuery first, then Bootstrap JS. -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
