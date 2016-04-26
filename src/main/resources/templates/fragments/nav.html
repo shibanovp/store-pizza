@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+    <div class="container" th:fragment="nav">
+        <nav class="navbar navbar-light bg-faded">
+            <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+                &#9776;
+            </button>
+            <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+                <a class="navbar-brand" href="#"><i class="fa fa-cutlery"></i> Store
+                </a>
+                <ul class="nav navbar-nav">
+                    <li class="nav-item  pull-xs-right">
+                        <a class="nav-link" href="cart"><i class="fa fa-shopping-cart"></i> Cart <span cart-length=""></span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>
