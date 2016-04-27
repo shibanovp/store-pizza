@@ -59,9 +59,7 @@ angular.module('cartService', [])
         }
      }
      function deleteItem(index) {
-        console.log(cart);
         cart.splice(index, 1);
-        console.log(cart);
         save();
      }
      function getLength() {
