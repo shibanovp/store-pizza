@@ -1,5 +1,5 @@
 
-angular.module('cart', [])
+angular.module('cart', ['cartService'])
 .run(function() {
 
 })

@@ -1,4 +1,4 @@
-angular.module('checkout', [])
+angular.module('checkout', ['cartService'])
 .run(function() {
     console.log('checkout runs');
 })
