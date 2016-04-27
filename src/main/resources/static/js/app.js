@@ -15,13 +15,11 @@ angular.module('app', ['cartService', 'ngResource', 'spring-data-rest'])
         replace: true
     }
 }])
-.directive('pizza', ['cart','$timeout', function(cart, $timeout) {
+.directive('pizza', ['cart', function(cart) {
   return {
     scope: {
       pizzaBase: '='
     },
-    controller: 'StoreCtrl',
-    controllerAs: 'store',
     replace: true,
     templateUrl: 'partials/pizza.html',
     link: function(scope) {
