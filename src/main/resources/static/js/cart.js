@@ -1,46 +1,32 @@
-
 angular.module('cart', ['cartService'])
-.run(function() {
-
-})
-.controller('CartCtrl', function($scope) {
+.controller('CartCtrl', ['$scope', 'cart', function($scope, cart) {
     var ctrl = this;
-    this.items = sessionStorage.cart ? JSON.parse(sessionStorage.cart) : [];
-    this.delete = function ($index) {
-        this.items.splice($index,1);
-        sessionStorage.cart = JSON.stringify(this.items);
+    ctrl.items = cart.getItems();
+    ctrl.update = function($index) {
+        var item = ctrl.items[$index];
+        cart.update($index, item.pizzaBase, item.pizza, item.quantity);
     }
-    this.save = function ($index, pizza) {
-        this.items[$index] = pizza;
-        sessionStorage.cart = JSON.stringify(this.items);
+    ctrl.delete = function($index) {
+        cart.delete($index);
     }
     $scope.$watch(function() { return ctrl.items;}, function() {
-        ctrl.total = ctrl.getTotal();
+        ctrl.total = cart.getTotal();
     }, true );
-    this.getTotal = function() {
-        return this.items.reduce(function(previousValue, currentValue) {
-              return previousValue + currentValue.pizza.price * currentValue.quantity;
-            }, 0);
+}])
+.directive('cartList', [function() {
+    return {
+        controller: 'CartCtrl',
+        controllerAs: 'cart',
+        templateUrl: 'partials/cart-list-edit.html',
+        replace: true
     }
-})
-.directive('pizzaEdit', ['$http','$timeout', function($http, $timeout) {
+}])
+.directive('cartItem', [function() {
   return {
     scope: false,
+    replace: true,
     controller: 'CartCtrl',
-    controllerAs: 'ctrl',
-    templateUrl: 'partials/pizza-edit.html',
-    link: function(scope) {
-        $http.get(scope.item.pizza._links.pizzaBase.href).then(function(res) {
-        console.log(res);
-        scope.item.pizzaBase = res.data;
-        return res;
-        }).then(function(res) {
-        $http.get(res.data._links.pizzas.href).then(function(res) {
-            scope.item.pizzas = res.data._embedded.pizza;
-        })
-        }).then(function() {
-            scope.ctrl.save(scope.$index, scope.item)
-        });
-    }
+    controllerAs: 'cart',
+    templateUrl: 'partials/cart-item-edit.html'
   }
 }]);

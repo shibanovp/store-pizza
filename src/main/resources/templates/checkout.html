@@ -9,32 +9,7 @@
 <!--Actual content begin-->
 
 <h1>Order confirmation page.</h1>
-<table class="table">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Pizza Name</th>
-        <th>Pizza Size</th>
-        <th>Quantity</th>
-        <th>Pizza Price</th>
-        <th>Subtotal</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="item in checkout.items track by $index">
-        <th scope="row">{{$index + 1}}</th>
-        <td>{{item.pizzaBase.name}}</td>
-        <td>{{item.pizza.size}}</td>
-        <td>{{item.quantity}}</td>
-        <td>{{item.pizza.price}}</td>
-        <td>{{item.pizza.price * item.quantity}}</td>
-    </tr>
-    <tr>
-        <th>Total</th>
-        <td>{{ checkout.total }}</td>
-    </tr>
-    </tbody>
-</table>
+<cart-list></cart-list>
 <form id="paymentForm text-xs-right" ng-submit="checkout.confirm()">
     <fieldset class="text-xs-center">
         <label class="c-input c-radio">

@@ -3,9 +3,10 @@ angular.module('cartService', [])
     var cart = sessionStorage.cart ? JSON.parse(sessionStorage.cart) : [];
     save();
     return {
-        getList: getList,
+        getItems: getItems,
         add: add,
-        getCart: getCart,
+        update: update,
+        delete: deleteItem,
         getTotal: getTotal,
         getLength: getLength
     }
@@ -14,13 +15,11 @@ angular.module('cartService', [])
           return previousValue + currentValue.pizza.price * currentValue.quantity;
         }, 0);
     }
-    function getCart() {
+    function getItems() {
         return cart;
     }
-    function getList() {
-        return cart;
-     };
-    function _indexOf(pizza) {
+    function _indexOf(pizza, cartArray) {
+        cartArray = cartArray || cart;
         var result = -1;
         angular.forEach(cart, function(item, index) {
             if (angular.equals(pizza, item.pizza)) {
@@ -42,11 +41,33 @@ angular.module('cartService', [])
       }
       save();
      }
+     function _isUnique(index, pizza) {
+        var newCart = cart.splice();
+        return _indexOf(pizza, newCart.splice(index, 1)) < 0;
+     }
+     function update(index, pizzaBase, pizza, quantity) {
+        if (_isUnique(index, pizza)) {
+            cart[index] = {
+                pizzaBase: pizzaBase,
+                pizza: pizza,
+                quantity: quantity
+            }
+            save();
+        } else {
+            cart.splice(index, 1);
+            add(pizzaBase, pizza, quantity);
+        }
+     }
+     function deleteItem(index) {
+        console.log(cart);
+        cart.splice(index, 1);
+        console.log(cart);
+        save();
+     }
      function getLength() {
         return cart.length;
      }
      function save() {
-        console.log(cart);
         sessionStorage.cart = JSON.stringify(cart);
         $rootScope.$broadcast('cartChanged');
      }
@@ -54,6 +75,7 @@ angular.module('cartService', [])
 
     .directive('cartLength',['$rootScope','cart', function($rootScope, cart) {
         return {
+            scope: true,
             template: '{{ cart }} ${{ total }}',
             link: function(scope) {
                 function updateCartInfo() {

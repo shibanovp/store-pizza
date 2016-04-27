@@ -2,34 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <object th:include="fragments/head :: head" th:remove="tag" />
-    <title>Pizza Store</title>
+    <title>Pizza Store Cart</title>
 </head>
 <body  ng-app="cart" ng-cloak="">
 <object th:include="fragments/nav :: nav" th:remove="tag" />
 <!--Actual content begin-->
 
 <h1 class="text-xs-center">Cart</h1>
-<table class="table" ng-controller="CartCtrl as cart">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Pizza Name</th>
-        <th>Pizza Size</th>
-        <th>Quantity</th>
-        <th>Pizza Price</th>
-        <th>Subtotal</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="item in cart.items track by $index" pizza-edit="">
-    </tr>
-    <tr>
-        <th>Total</th>
-        <td>{{ cart.total }}</td>
-    </tr>
-    </tbody>
-</table>
+<cart-list></cart-list>
 
 <a class="btn btn-primary" href="/checkout">Checkout</a>
 <!--Actual content end-->
