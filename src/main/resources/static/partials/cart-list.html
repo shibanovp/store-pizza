@@ -1,0 +1,26 @@
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Pizza Name</th>
+            <th>Pizza Size</th>
+            <th>Quantity</th>
+            <th>Pizza Price</th>
+            <th>Subtotal</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  ng-repeat="item in cart.items track by $index"></tr>
+        <tr cart-item="" ng-repeat="item in checkout.items track by $index">
+
+        </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Total</th>
+                <td>{{ checkout.total }}</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

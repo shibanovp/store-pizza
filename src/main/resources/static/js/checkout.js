@@ -1,15 +1,9 @@
-angular.module('checkout', [])
-.run(function() {
-    console.log('checkout runs');
-})
-.controller('CheckoutCtrl', ['$scope', '$http', function($scope, $http) {
+angular.module('checkout', ['cartService'])
+.controller('CheckoutCtrl', ['$scope', '$http', 'cart', function($scope, $http, cart) {
     var ctrl = this;
     ctrl.method = 'cash';
-    ctrl.items = JSON.parse(sessionStorage.cart);
-    ctrl.total = ctrl.items.reduce(function(previousValue, currentValue) {
-       return previousValue + currentValue.pizza.price * currentValue.quantity;
-     }, 0);
-    console.log(ctrl.items);
+    ctrl.items = cart.getItems();
+    ctrl.total = cart.getTotal();
     ctrl.confirm = function() {
         $http.post('bill', {}).then(function(res) {
             return res.data._links.self.href;
@@ -37,4 +31,18 @@ angular.module('checkout', [])
             delete sessionStorage.cart
         })
     }
-}]);
+}])
+
+.directive('cartList', [function() {
+  return {
+    replace: true,
+    templateUrl: 'partials/cart-list.html'
+  }
+}])
+.directive('cartItem', [function() {
+  return {
+    replace: true,
+    templateUrl: 'partials/cart-item.html'
+  }
+}])
+;
