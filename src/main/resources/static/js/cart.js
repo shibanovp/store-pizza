@@ -13,7 +13,7 @@ angular.module('cart', ['cartService'])
         ctrl.total = cart.getTotal();
     }, true );
 }])
-.directive('cartList', [function() {
+.directive('cartListEdit', [function() {
     return {
         controller: 'CartCtrl',
         controllerAs: 'cart',
@@ -21,7 +21,7 @@ angular.module('cart', ['cartService'])
         replace: true
     }
 }])
-.directive('cartItem', [function() {
+.directive('cartItemEdit', [function() {
   return {
     scope: false,
     replace: true,
