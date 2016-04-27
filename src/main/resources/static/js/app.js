@@ -1,20 +1,11 @@
 angular.module('app', ['cartService', 'ngResource', 'spring-data-rest'])
-.controller('StoreCtrl', ['$scope','$http', function($scope, $http) {
+.controller('StoreCtrl', ['$scope','StorePizzaBases', function($scope, StorePizzaBases) {
     var ctrl = this;
-    $http.get('pizzabase').then(function(res) {
-        if (res.data._embedded != undefined) {
-
-            ctrl.pizzas = res.data._embedded.pizzaBase;
-            angular.forEach(ctrl.pizzas, function(pizzaBase) {
-                $http.get(pizzaBase._links.pizzas.href).then(function(res) {
-                    pizzaBase.pizzas = res.data._embedded.pizza;
-                })
-            })
-        } else {
-            ctrl.pizzas = [];
-        }
+    StorePizzaBases.then(function success(pizzaBases) {
+        ctrl.pizzas = pizzaBases || [];
+    }).catch(function error() {
+        ctrl.pizzas = [];
     });
-
 }])
 .directive('pizza', ['cart','$timeout', function(cart, $timeout) {
   return {
@@ -24,7 +15,7 @@ angular.module('app', ['cartService', 'ngResource', 'spring-data-rest'])
     templateUrl: 'partials/pizza.html',
     link: function(scope) {
         $timeout(function() {
-            scope.checked = scope.data.pizzas[0];
+            scope.checked = scope.data.pizzas._embeddedItems[0];
         });
         scope.add = function() {
             cart.add(scope.checked, 1);
@@ -32,8 +23,8 @@ angular.module('app', ['cartService', 'ngResource', 'spring-data-rest'])
     }
   }
 }])
-.run(function($http, SpringDataRestAdapter) {
-SpringDataRestAdapter.process($http.get('pizzabase'), 'pizzas').then(function (processedResponse) {
-     console.log(processedResponse);
-});
-});
+.factory('StorePizzaBases', ['$http', 'SpringDataRestAdapter', function($http, SpringDataRestAdapter) {
+    return SpringDataRestAdapter.process($http.get('pizzabase'), 'pizzas').then(function successfullyFetched(processedResponse) {
+        return processedResponse._embeddedItems;
+    });
+}]);

@@ -3,7 +3,7 @@
     <h4 class="card-title">{{data.name}}</h4>
     <p class="card-text"></p>
     <div class="c-input c-radio">
-        <label ng-repeat="pizza in data.pizzas"class="c-input c-radio" >
+        <label ng-repeat="pizza in data.pizzas._embeddedItems" class="c-input c-radio" >
             <input type="radio" ng-model="$parent.checked" ng-value="pizza" />
             <span>{{ pizza.size }}</span>
             <span class="c-indicator"></span>
