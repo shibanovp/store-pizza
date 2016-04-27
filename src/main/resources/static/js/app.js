@@ -1,24 +1,33 @@
 angular.module('app', ['cartService', 'ngResource', 'spring-data-rest'])
-.controller('StoreCtrl', ['$scope','StorePizzaBases', function($scope, StorePizzaBases) {
+.controller('StoreCtrl', ['StorePizzaBases', function(StorePizzaBases) {
     var ctrl = this;
     StorePizzaBases.then(function success(pizzaBases) {
-        ctrl.pizzas = pizzaBases || [];
+        ctrl.pizzaBases = pizzaBases || [];
     }).catch(function error() {
-        ctrl.pizzas = [];
+        ctrl.pizzaBases = [];
     });
+}])
+.directive('pizzaList', ['cart', function(cart) {
+    return {
+        templateUrl: 'partials/pizza-list.html',
+        controller: 'StoreCtrl',
+        controllerAs: 'store',
+        replace: true
+    }
 }])
 .directive('pizza', ['cart','$timeout', function(cart, $timeout) {
   return {
     scope: {
-      data: '='
+      pizzaBase: '='
     },
+    controller: 'StoreCtrl',
+    controllerAs: 'store',
+    replace: true,
     templateUrl: 'partials/pizza.html',
     link: function(scope) {
-        $timeout(function() {
-            scope.checked = scope.data.pizzas._embeddedItems[0];
-        });
-        scope.add = function() {
-            cart.add(scope.checked, 1);
+        scope.pizza = scope.pizzaBase.pizzas._embeddedItems[0];
+        scope.addToCart = function() {
+            cart.add(scope.pizzaBase, scope.pizza, 1);
         }
     }
   }
