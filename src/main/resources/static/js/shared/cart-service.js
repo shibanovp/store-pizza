@@ -6,7 +6,8 @@ angular.module('cartService', [])
         getList: getList,
         add: add,
         getCart: getCart,
-        getTotal: getTotal
+        getTotal: getTotal,
+        getLength: getLength
     }
     function getTotal() {
     return cart.reduce(function(previousValue, currentValue) {
@@ -24,14 +25,12 @@ angular.module('cartService', [])
           pizza: pizza,
           quantity: quantity
       });
-      $rootScope.$broadcast('cartChanged');
-      sessionStorage.cart = JSON.stringify(cart);
+      save();
      }
      function getLength() {
         return cart.length;
      }
      function save() {
-        console.warn('saved');
         sessionStorage.cart = JSON.stringify(cart);
         $rootScope.$broadcast('cartChanged');
      }
@@ -42,7 +41,7 @@ angular.module('cartService', [])
             template: '{{ cart }} ${{ total }}',
             link: function(scope) {
                 function updateCartInfo() {
-                    scope.cart = cart.getList().length;
+                    scope.cart = cart.getLength();
                     scope.total = cart.getTotal();
                 }
                 updateCartInfo();

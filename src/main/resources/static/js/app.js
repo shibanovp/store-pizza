@@ -1,4 +1,4 @@
-angular.module('app', ['cartService'])
+angular.module('app', ['cartService', 'ngResource', 'spring-data-rest'])
 .controller('StoreCtrl', ['$scope','$http', function($scope, $http) {
     var ctrl = this;
     $http.get('pizzabase').then(function(res) {
@@ -31,4 +31,9 @@ angular.module('app', ['cartService'])
         }
     }
   }
-}]);
+}])
+.run(function($http, SpringDataRestAdapter) {
+SpringDataRestAdapter.process($http.get('pizzabase'), 'pizzas').then(function (processedResponse) {
+     console.log(processedResponse);
+});
+});
