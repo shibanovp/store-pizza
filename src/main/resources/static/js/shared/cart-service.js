@@ -1,14 +1,15 @@
 angular.module('cartService', [])
 .factory('cart', ['$rootScope', function($rootScope) {
     var cart = sessionStorage.cart ? JSON.parse(sessionStorage.cart) : [];
-    save();
+    _save();
     return {
         getItems: getItems,
         add: add,
         update: update,
         delete: deleteItem,
         getTotal: getTotal,
-        getLength: getLength
+        getLength: getLength,
+        clear: clear
     }
     function getTotal() {
         return cart.reduce(function(previousValue, currentValue) {
@@ -39,7 +40,7 @@ angular.module('cartService', [])
               quantity: quantity
           });
       }
-      save();
+      _save();
      }
      function _isUnique(index, pizza) {
         var newCart = cart.splice();
@@ -52,7 +53,7 @@ angular.module('cartService', [])
                 pizza: pizza,
                 quantity: quantity
             }
-            save();
+            _save();
         } else {
             cart.splice(index, 1);
             add(pizzaBase, pizza, quantity);
@@ -60,12 +61,12 @@ angular.module('cartService', [])
      }
      function deleteItem(index) {
         cart.splice(index, 1);
-        save();
+        _save();
      }
      function getLength() {
         return cart.length;
      }
-     function save() {
+     function _save() {
         sessionStorage.cart = JSON.stringify(cart);
         $rootScope.$broadcast('cartChanged');
      }
