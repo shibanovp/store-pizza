@@ -3,6 +3,6 @@
     <td>{{item.pizzaBase.name}}</td>
     <td>{{item.pizza.size}}</td>
     <td>{{item.quantity}}</td>
-    <td>{{item.pizza.price}}</td>
-    <td>{{item.pizza.price * item.quantity}}</td>
+    <td>{{item.pizza.price | number:2}}</td>
+    <td>{{item.pizza.price * item.quantity | number:2}}</td>
 </tr>
