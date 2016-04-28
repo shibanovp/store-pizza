@@ -4,14 +4,19 @@
     <object th:include="fragments/head :: head" th:remove="tag" />
     <title>Pizza Store Cart</title>
 </head>
-<body  ng-app="cart" ng-cloak="">
+<body  ng-app="cart" ng-cloak="" ng-controller="CartCtrl as cart">
 <object th:include="fragments/nav :: nav" th:remove="tag" />
 <!--Actual content begin-->
+<div class="container" ng-hide="cart.isEmpty">
+    <h1 class="text-xs-center">Cart</h1>
+    <cart-list-edit></cart-list-edit>
+    <a class="btn btn-lg btn-primary" href="/checkout">Checkout</a>
+</div>
+<div class="container text-xs-center" ng-show="cart.isEmpty">
+    <h1>Your cart is empty!</h1>
+    <a class="btn btn-lg btn-primary" href="/">Add some pizzas</a>
+</div>
 
-<h1 class="text-xs-center">Cart</h1>
-<cart-list-edit></cart-list-edit>
-
-<a class="btn btn-primary" href="/checkout">Checkout</a>
 <!--Actual content end-->
 
 <object th:include="fragments/vendor-scripts :: vendor-scripts" th:remove="tag" />

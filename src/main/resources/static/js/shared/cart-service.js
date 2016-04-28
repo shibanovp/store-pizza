@@ -9,6 +9,7 @@ angular.module('cartService', [])
         delete: deleteItem,
         getTotal: getTotal,
         getLength: getLength,
+        isEmpty: isEmpty,
         clear: clear
     }
     function getTotal() {
@@ -70,6 +71,9 @@ angular.module('cartService', [])
      function _save() {
         sessionStorage.cart = JSON.stringify(cart);
         $rootScope.$broadcast('cartChanged');
+     }
+     function isEmpty() {
+        return cart.length === 0;
      }
      function clear() {
         cart = [];
