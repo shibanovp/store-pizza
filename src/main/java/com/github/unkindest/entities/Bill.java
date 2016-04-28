@@ -16,6 +16,7 @@ public class Bill {
     private String customerName;
     private String customerPhone;
     private String customerEmail;
+    private String address;
     private Date desiredDelivery;
     @OneToMany(mappedBy = "bill")
     private Set<BillPizza> billPizzas = new HashSet<BillPizza>();
@@ -66,5 +67,13 @@ public class Bill {
 
     public void setDesiredDelivery(Date desiredDelivery) {
         this.desiredDelivery = desiredDelivery;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
