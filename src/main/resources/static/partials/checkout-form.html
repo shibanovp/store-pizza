@@ -1,5 +1,29 @@
 <form id="paymentForm text-xs-right" ng-submit="checkout.confirm()">
+    <fieldset>
 
+        <fieldset class="form-group">
+            <label for="formBillCustomerName">Customer Name</label>
+            <input type="text" ng-model="checkout.bill.customerName" class="form-control" id="formBillCustomerName" placeholder="John Smith" />
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="formBillCustomerPhone">Customer Phone</label>
+            <input type="tel" ng-model="checkout.bill.customerPhone" class="form-control" id="formBillCustomerPhone" placeholder="+7945554441225" />
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="formBillCustomerEmail">Customer Email</label>
+            <input type="email" ng-model="checkout.bill.customerEmail" class="form-control" id="formBillCustomerEmail" placeholder="john@smith.com" />
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="formBilldesiredDelivery">Desired Delivery</label>
+            <input type="datetime-local"
+                   step="1800"
+                   min="{{checkout.deliveryMin | date:'yyyy-MM-ddTHH:mm:ss'}}"
+                   max="{{checkout.deliveryMax | date:'yyyy-MM-ddTHH:mm:ss'}}"
+                   ng-model="checkout.bill.desiredDelivery"
+                   class="form-control"
+                   id="formBilldesiredDelivery"/>
+        </fieldset>
+    </fieldset>
     <fieldset class="text-xs-center">
 
         <label class="c-input c-radio">
@@ -37,7 +61,7 @@
         <label>CVV</label>
         <fieldset class="form-group">
             <div class="col-xs-4">
-                <input type="text" ng-model="checkout.cardpayment.ccv" class="form-control" placeholder="000" />
+                <input type="password" ng-model="checkout.cardpayment.ccv" class="form-control" placeholder="000" />
             </div>
         </fieldset>
     </fieldset>

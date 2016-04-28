@@ -2,6 +2,7 @@ angular.module('checkout', ['cartService'])
 .controller('CheckoutCtrl', ['$scope', '$window', 'cart','confirmOrder', function($scope, $window, cart, confirmOrder) {
     var ctrl = this;
     ctrl.method = 'cash';
+    ctrl.bill = {};
     function syncCart() {
         ctrl.items = cart.getItems();
         ctrl.total = cart.getTotal();
@@ -9,7 +10,7 @@ angular.module('checkout', ['cartService'])
     syncCart();
     $scope.$on('cartChanged', syncCart)
     ctrl.confirm = function() {
-        var bill = {};
+        var bill = ctrl.bill || {};
         confirmOrder(this.items, bill, ctrl.method, ctrl.cardpayment).then(function(billUri) {
             console.warn(billUri);
 //            $window.location.href = '/';
@@ -19,7 +20,7 @@ angular.module('checkout', ['cartService'])
 .factory('confirmOrder', ['$http', 'cart',function($http, cart) {
     return function(items, bill, method, cardpayment) {
     console.log(items, bill, method, cardpayment);
-        return $http.post('bill', {}).then(function(res) {
+        return $http.post('bill', bill).then(function(res) {
             return res.data._links.self.href;
         }).then(function (billUri) {
             angular.forEach(items, function(item) {
@@ -58,6 +59,17 @@ angular.module('checkout', ['cartService'])
         replace: true,
         templateUrl: 'partials/checkout-form.html',
         controller: 'CheckoutCtrl',
-        controllerAs: 'checkout'
+        controllerAs: 'checkout',
+        link: function(scope) {
+            var ctrl = scope.checkout;
+            var date = new Date();
+            var minutes = date.getMinutes() >= 30 ? 30 : 0;
+            date.setHours(date.getHours() + 1, minutes, 0, 0)
+            ctrl.bill.desiredDelivery = date;
+            ctrl.deliveryMin = date;
+            var maxDate = new Date(date.getTime());
+            maxDate.setDate(maxDate.getDate() + 3);
+            ctrl.deliveryMax = maxDate;
+        }
     }
 }]);
