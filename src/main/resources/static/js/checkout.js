@@ -12,14 +12,13 @@ angular.module('checkout', ['cartService'])
     syncCart();
     $scope.$on('cartChanged', syncCart)
     ctrl.confirm = function() {
-        confirmOrder(this.items, bill, ctrl.method, ctrl.cardpayment).then(function(billUri) {
+        confirmOrder(this.items, ctrl.bill, ctrl.method, ctrl.cardpayment).then(function(billUri) {
 //            $window.location.href = '/'; redirection should be here.
         });
     }
 }])
 .factory('confirmOrder', ['$http', 'cart',function($http, cart) {
     return function(items, bill, method, cardpayment) {
-    console.log(items, bill, method, cardpayment);
         return $http.post('bill', bill).then(function(res) {
             return res.data._links.self.href;
         }).then(function (billUri) {
