@@ -7,7 +7,9 @@ angular.module('cart', ['cartService'])
         cart.update($index, item.pizzaBase, item.pizza, item.quantity);
     }
     ctrl.delete = function($index) {
-        cart.delete($index);
+        if (confirm('Are you sure want to remove ' + ctrl.items[$index].pizzaBase.name + ' from your cart?')) {
+            cart.delete($index);
+        }
     }
     $scope.$watch(function() { return ctrl.items;}, function() {
         ctrl.total = cart.getTotal();
