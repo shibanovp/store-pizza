@@ -1,14 +1,28 @@
 angular.module('checkout', ['cartService'])
-.controller('CheckoutCtrl', ['$scope', '$http', 'cart', function($scope, $http, cart) {
+.controller('CheckoutCtrl', ['$scope', '$window', 'cart','confirmOrder', function($scope, $window, cart, confirmOrder) {
     var ctrl = this;
     ctrl.method = 'cash';
-    ctrl.items = cart.getItems();
-    ctrl.total = cart.getTotal();
+    function syncCart() {
+        ctrl.items = cart.getItems();
+        ctrl.total = cart.getTotal();
+    }
+    syncCart();
+    $scope.$on('cartChanged', syncCart)
     ctrl.confirm = function() {
-        $http.post('bill', {}).then(function(res) {
+        var bill = {};
+        confirmOrder(this.items, bill, ctrl.method, ctrl.cardpayment).then(function(billUri) {
+            console.warn(billUri);
+//            $window.location.href = '/';
+        });
+    }
+}])
+.factory('confirmOrder', ['$http', 'cart',function($http, cart) {
+    return function(items, bill, method, cardpayment) {
+    console.log(items, bill, method, cardpayment);
+        return $http.post('bill', {}).then(function(res) {
             return res.data._links.self.href;
         }).then(function (billUri) {
-            angular.forEach(ctrl.items, function(item) {
+            angular.forEach(items, function(item) {
             pizzaUri = item.pizza._links.self.href;
                 $http.post('billpizza', {
                     bill: billUri,
@@ -18,17 +32,12 @@ angular.module('checkout', ['cartService'])
             })
             return billUri;
         }).then(function(billUri) {
-            if (ctrl.method == 'card') {
-                $http.post('cardpayment', {
-                    bill: billUri,
-                    number: ctrl.number,
-                    name: ctrl.name,
-                    validm: ctrl.validm,
-                    validy: ctrl.validy,
-                    ccv: ctrl.ccv
-                })
+            if (method == 'card') {
+                cardpayment.bill = billUri;
+                $http.post('cardpayment', cardpayment);
             }
-            delete sessionStorage.cart
+            cart.clear();
+            return billUri;
         })
     }
 }])
