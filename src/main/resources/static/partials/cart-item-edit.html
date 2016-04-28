@@ -2,10 +2,11 @@
     <td scope="row">{{$index + 1}}</td>
     <td>{{item.pizzaBase.name}}</td>
     <td>
-        <select ng-model="item.pizza" ng-options="pizza.size for pizza in item.pizzaBase.pizzas._embeddedItems" ng-change="cart.update($index)"></select>
+        <select class="c-select" ng-model="item.pizza" ng-options="pizza.size for pizza in item.pizzaBase.pizzas._embeddedItems" ng-change="cart.update($index)"></select>
     </td>
-    <td><input ng-model="item.quantity" ng-change="cart.update($index)" /></td>
-    <td>{{item.pizza.price}}</td>
-    <td>{{item.pizza.price * item.quantity}}</td>
+    <td>
+        <input type="number" class="form-control" ng-model="item.quantity" ng-change="cart.update($index)" /></td>
+    <td>{{item.pizza.price | number:2 }}</td>
+    <td>{{item.pizza.price * item.quantity | number:2 }}</td>
     <td><button class="btn" ng-click="cart.delete($index)">Delete</button></td>
 </tr>

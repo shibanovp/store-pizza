@@ -41,7 +41,6 @@ angular.module('checkout', ['cartService'])
         })
     }
 }])
-
 .directive('cartList', [function() {
   return {
     replace: true,
@@ -54,4 +53,11 @@ angular.module('checkout', ['cartService'])
     templateUrl: 'partials/cart-item.html'
   }
 }])
-;
+.directive('checkoutForm', [function() {
+    return {
+        replace: true,
+        templateUrl: 'partials/checkout-form.html',
+        controller: 'CheckoutCtrl',
+        controllerAs: 'checkout'
+    }
+}]);

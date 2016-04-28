@@ -10,49 +10,7 @@
 
 <h1>Order confirmation page.</h1>
 <cart-list></cart-list>
-<form id="paymentForm text-xs-right" ng-submit="checkout.confirm()">
-    <fieldset class="text-xs-center">
-        <label class="c-input c-radio">
-            <i class="fa fa-2x fa-money"></i>
-            <input id="radio1" ng-model="checkout.method"  type="radio" checked="" value="cash" />
-            <span class="c-indicator"></span>
-            I will pay with cash.
-        </label>
-        <label class="c-input c-radio">
-            <i class="fa fa-2x fa-credit-card"></i>
-            <input id="radio2" ng-model="checkout.method" type="radio" value="card" />
-            <span class="c-indicator"></span>
-            I will pay with credit card.
-        </label>
-    </fieldset>
-    <fieldset id="cardPayment" ng-show="checkout.method == 'card'">
-        <fieldset class="form-group">
-            <label for="formGroupExampleInput">Card number</label>
-            <input type="text" ng-model="checkout.cardpayment.number" class="form-control" id="formGroupExampleInput" placeholder="0000 0000 0000 0000" />
-        </fieldset>
-        <fieldset class="form-group">
-            <label for="formGroupExampleInput2">Card holder name</label>
-            <input type="text" ng-model="checkout.cardpayment.name" class="form-control" id="formGroupExampleInput2" placeholder="John Smith" />
-        </fieldset>
-
-        <label>Valid through</label>
-        <fieldset class="form-group">
-            <div class="col-xs-4">
-                <input type="text" ng-model="checkout.cardpayment.validm" class="form-control" placeholder="MM" />
-            </div>
-            <div class="col-xs-4">
-                <input type="text" ng-model="checkout.cardpayment.validy" class="form-control" placeholder="YY" />
-            </div>
-        </fieldset>
-        <label>CVV</label>
-        <fieldset class="form-group">
-            <div class="col-xs-4">
-                <input type="text" ng-model="checkout.cardpayment.ccv" class="form-control" placeholder="000" />
-            </div>
-        </fieldset>
-    </fieldset>
-    <button type="submit" id="submit"  class="btn btn-primary btn-lg">Confirm Order</button>
-</form>
+<checkout-form></checkout-form>
 <!--Actual content end-->
 
 <object th:include="fragments/vendor-scripts :: vendor-scripts" th:remove="tag" />
