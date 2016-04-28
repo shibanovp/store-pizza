@@ -19,7 +19,6 @@ angular.module('checkout', ['cartService'])
 }])
 .factory('confirmOrder', ['$http', 'cart',function($http, cart) {
     return function(items, bill, method, cardpayment) {
-    console.log(items, bill, method, cardpayment);
         return $http.post('bill', bill).then(function(res) {
             return res.data._links.self.href;
         }).then(function (billUri) {
