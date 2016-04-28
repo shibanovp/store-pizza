@@ -22,7 +22,7 @@ angular.module('cartService', [])
     function _indexOf(pizza, cartArray) {
         cartArray = cartArray || cart;
         var result = -1;
-        angular.forEach(cart, function(item, index) {
+        angular.forEach(cartArray, function(item, index) {
             if (angular.equals(pizza, item.pizza)) {
                 result = index;
             }
@@ -43,8 +43,9 @@ angular.module('cartService', [])
       _save();
      }
      function _isUnique(index, pizza) {
-        var newCart = cart.splice();
-        return _indexOf(pizza, newCart.splice(index, 1)) < 0;
+        var newCart = angular.copy(cart);
+        newCart.splice(index, 1);
+        return _indexOf(pizza, newCart) < 0;
      }
      function update(index, pizzaBase, pizza, quantity) {
         if (_isUnique(index, pizza)) {
