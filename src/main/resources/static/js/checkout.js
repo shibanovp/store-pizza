@@ -3,6 +3,7 @@ angular.module('checkout', ['cartService'])
     var ctrl = this;
     ctrl.method = 'cash';
     ctrl.bill = {};
+    ctrl.cardpayment = {};
     function syncCart() {
         ctrl.items = cart.getItems();
         ctrl.total = cart.getTotal();
@@ -11,10 +12,8 @@ angular.module('checkout', ['cartService'])
     syncCart();
     $scope.$on('cartChanged', syncCart)
     ctrl.confirm = function() {
-        var bill = ctrl.bill || {};
         confirmOrder(this.items, bill, ctrl.method, ctrl.cardpayment).then(function(billUri) {
-            console.warn(billUri);
-//            $window.location.href = '/';
+//            $window.location.href = '/'; redirection should be here.
         });
     }
 }])
