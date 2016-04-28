@@ -70,6 +70,10 @@ angular.module('cartService', [])
         sessionStorage.cart = JSON.stringify(cart);
         $rootScope.$broadcast('cartChanged');
      }
+     function clear() {
+        cart = [];
+        _save();
+     }
    }])
 
     .directive('cartLength',['$rootScope','cart', function($rootScope, cart) {
