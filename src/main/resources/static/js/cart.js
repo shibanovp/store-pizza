@@ -2,6 +2,7 @@ angular.module('cart', ['cartService'])
 .controller('CartCtrl', ['$scope', 'cart', function($scope, cart) {
     var ctrl = this;
     ctrl.items = cart.getItems();
+    ctrl.isEmpty = cart.isEmpty();
     ctrl.update = function($index) {
         var item = ctrl.items[$index];
         cart.update($index, item.pizzaBase, item.pizza, item.quantity);
@@ -13,6 +14,7 @@ angular.module('cart', ['cartService'])
     }
     $scope.$watch(function() { return ctrl.items;}, function() {
         ctrl.total = cart.getTotal();
+        ctrl.isEmpty = cart.isEmpty();
     }, true );
 }])
 .directive('cartListEdit', [function() {

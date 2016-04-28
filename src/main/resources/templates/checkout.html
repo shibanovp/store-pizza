@@ -7,10 +7,15 @@
 <body  ng-app="checkout" ng-controller="CheckoutCtrl as checkout" ng-cloak="">
 <object th:include="fragments/nav :: nav" th:remove="tag" />
 <!--Actual content begin-->
-
-<h1>Order confirmation page.</h1>
-<cart-list></cart-list>
-<checkout-form></checkout-form>
+<div class="container" ng-hide="checkout.isEmpty">
+    <h1>Order confirmation page.</h1>
+    <cart-list></cart-list>
+    <checkout-form></checkout-form>
+</div>
+<div class="container text-xs-center" ng-show="checkout.isEmpty">
+    <h1>Your cart is empty!</h1>
+    <a class="btn btn-lg btn-primary" href="/">Add some pizzas</a>
+</div>
 <!--Actual content end-->
 
 <object th:include="fragments/vendor-scripts :: vendor-scripts" th:remove="tag" />

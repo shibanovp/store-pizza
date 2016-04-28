@@ -6,6 +6,7 @@ angular.module('checkout', ['cartService'])
     function syncCart() {
         ctrl.items = cart.getItems();
         ctrl.total = cart.getTotal();
+        ctrl.isEmpty = cart.isEmpty();
     }
     syncCart();
     $scope.$on('cartChanged', syncCart)
