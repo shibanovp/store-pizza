@@ -77,10 +77,10 @@ angular.module('cartService', [])
      }
    }])
 
-    .directive('cartLength',['$rootScope','cart', function($rootScope, cart) {
+    .directive('cartInfo',['$rootScope','cart', function($rootScope, cart) {
         return {
             scope: true,
-            template: '{{ cart }} ${{ total | number:2 }}',
+            template: '<span ng-show="cart > 0">{{ cart }} ${{ total | number:2 }}</span>',
             link: function(scope) {
                 function updateCartInfo() {
                     scope.cart = cart.getLength();
